@@ -12,14 +12,14 @@ import UIKit
 public protocol ActionKitControl {}
 
 public extension ActionKitControl where Self: UIControl {
-    func addControlEvent(_ controlEvents: UIControlEvents, closureWithControl: @escaping (Self) -> ()) {
+    func addControlEvent(_ controlEvents: UIControl.Event, closureWithControl: @escaping (Self) -> ()) {
         _addControlEvent(controlEvents, closure: { [weak self] () -> () in
             guard let strongSelf = self else { return }
             closureWithControl(strongSelf)
             })
     }
     
-    func addControlEvent(_ controlEvents: UIControlEvents, closure: @escaping () -> ()) {
+    func addControlEvent(_ controlEvents: UIControl.Event, closure: @escaping () -> ()) {
         _addControlEvent(controlEvents, closure: closure)
     }
 }
@@ -191,7 +191,7 @@ public extension UIControl {
         AllEventsClosure?()
     }
     
-    fileprivate func _addControlEvent(_ controlEvents: UIControlEvents, closure: @escaping ActionKitVoidClosure) {
+    fileprivate func _addControlEvent(_ controlEvents: UIControl.Event, closure: @escaping ActionKitVoidClosure) {
         switch controlEvents {
         case let x where x.contains(.touchDown):
             self.TouchDownClosure = closure
@@ -256,7 +256,7 @@ public extension UIControl {
         }
     }
     
-    func removeControlEvent(_ controlEvents: UIControlEvents) {
+    func removeControlEvent(_ controlEvents: UIControl.Event) {
         switch controlEvents {
         case let x where x.contains(.touchDown):
             self.TouchDownClosure = nil

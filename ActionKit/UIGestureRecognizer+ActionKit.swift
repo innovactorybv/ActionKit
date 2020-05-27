@@ -23,7 +23,7 @@ public extension ActionKitGestureRecognizer where Self: UIGestureRecognizer {
     }
     
     func addClosure(_ closureWithControl: @escaping (Self) -> ()) {
-        _addControlEvent(closure: { [weak self] (UIControl) -> () in
+        _addControlEvent(closure: { [weak self] in
             guard let strongSelf = self else { return }
             closureWithControl(strongSelf)
             })

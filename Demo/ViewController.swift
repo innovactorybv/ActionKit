@@ -24,8 +24,8 @@ class ViewController: UIViewController {
     
     // Part of making old test button changed to tapped. This is what ActionKit tries to avoid doing
     // by removing the need to explicitly declare selector functions when a closure is all that's needed
-    func tappedSelector(_ sender: UIButton!) {
-        self.oldTestButton.setTitle("Old Tapped!", for: UIControlState())
+    @objc func tappedSelector(_ sender: UIButton!) {
+        self.oldTestButton.setTitle("Old Tapped!", for: UIControl.State())
     }
     
     override func viewDidLoad() {
@@ -39,31 +39,31 @@ class ViewController: UIViewController {
 
         // This is equivalent to oldTestButton's implementation of setting the action to Tapped
         testButton.addControlEvent(.touchUpInside) { [weak self] in
-            self?.testButton.setTitle("Tapped! @ \(Int(Date().timeIntervalSince(startDate)))sec", for: UIControlState())
+            self?.testButton.setTitle("Tapped! @ \(Int(Date().timeIntervalSince(startDate)))sec", for: UIControl.State())
             self?.testButton.removeControlEvent(.touchUpInside);
         }
 
         //: This adds a closure to the second button on the screen to change the text to Tapped2! when being tapped
         testButton2.addControlEvent(.touchUpInside, closure: { [weak self] in
-            self?.testButton2.setTitle("Tapped2!", for: UIControlState())
+            self?.testButton2.setTitle("Tapped2!", for: UIControl.State())
             })
         
         // This adds a closure to the second button on the screen to change the text to Tapped2! when being tapped
         testButton2.addControlEvent(.touchUpInside, closure: { [weak self] in
-            self?.testButton2.setTitle("Tapped2!", for: UIControlState())
+            self?.testButton2.setTitle("Tapped2!", for: UIControl.State())
             })
 
         
         //: This adds a closure, which receives the UIControl as input parameter, to the third button.
         //: It shows how the UIControl can be mapped to the UIButton, in order to have its title changed.
         testButton3.addControlEvent(.touchUpInside) { (button: UIButton) in
-            button.setTitle("Tapped3!", for: UIControlState())
+            button.setTitle("Tapped3!", for: UIControl.State())
         }
 
         //: The following shows that you can remove a control event that has been set.
         //: Initially, tapping the first button on the screen would set the text to "Tapped!" ...
         inactiveButton.addControlEvent(.touchUpInside) { [weak self] in
-            self?.inactiveButton.setTitle("Tapped!", for: UIControlState())
+            self?.inactiveButton.setTitle("Tapped!", for: UIControl.State())
         }
         
         //: ... but then the following removes that.
@@ -80,7 +80,7 @@ class ViewController: UIViewController {
         //: The following three lines will add an additional action to the red color gesture recognizer.
         //:  Multiple actions per gesture recognizer (or control events) are possible.
         tgr.addClosure() { [weak self] in
-            self?.testButton.setTitle("Gesture: tapped once!", for: UIControlState())
+            self?.testButton.setTitle("Gesture: tapped once!", for: UIControl.State())
         }
         
         //: Add a Double Tap Gesture Recognizer (dtgr)
@@ -102,7 +102,7 @@ class ViewController: UIViewController {
             if gesture.state == .began {
                 guard let strongSelf = self else { return }
                 let locInView = gesture.location(in: strongSelf.view)
-                strongSelf.testButton2.setTitle("\(locInView)", for: UIControlState())
+                strongSelf.testButton2.setTitle("\(locInView)", for: UIControl.State())
             }
         })
 		
